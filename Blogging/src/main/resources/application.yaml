@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: Blogging
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 25
+    username: www.samarthagarwal95360@gmail.com
+    password: mxpl wrme qwdw ljus
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8090
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        register-health-indicator: true
+        failure-rate-threshold: 50 # Percentage of failed calls before opening the circuit
+        wait-duration-in-open-state: 10s # Duration to stay open before transitioning to half-open
+        sliding-window-type: COUNT_BASED # Measure success/failure over a count of calls
+        sliding-window-size: 20 # Number of calls to measure failure rate
+        permitted-number-of-calls-in-half-open-state: 5 # Test calls in half-open state
+    instances:
+      imageProxy:
+        base-config: default
+      imageService:
+        base-config: default
+
+
+
+
